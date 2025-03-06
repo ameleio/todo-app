@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Liste</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ziele</h1>
+        <ul id="completedTasks"></ul>
+
+        <button id="showAllBtn">
+            <img src="assets/eye.png" width="30"> Alle anzeigen
+        </button>
+
+        <div id="taskContainer">
+            <ul id="taskList"></ul>
+        </div>
+
+        <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
+        <button id="addTaskBtn">
+            <img src="assets/check.png" width="30"> Hinzufügen
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
