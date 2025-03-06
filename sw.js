@@ -19,16 +19,7 @@ self.addEventListener("install", event => {
     );
 });
 
-// Aktiviert den neuen Service Worker und löscht alte Caches
-self.addEventListener("activate", event => {
-    event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(
-                keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-            );
-        })
-    );
-});
+
 
 // Interceptet Netzwerk-Anfragen und lädt aus dem Cache, falls offline
 self.addEventListener("fetch", event => {
