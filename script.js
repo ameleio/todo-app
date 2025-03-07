@@ -61,3 +61,46 @@ if ('serviceWorker' in navigator) {
         .then(() => console.log("Service Worker registriert"))
         .catch(error => console.log("Service Worker Fehler:", error));
 }
+
+
+
+
+document.getElementById("addTask").addEventListener("click", function () {
+    let taskInput = document.getElementById("taskInput");
+    
+    // Eingabefeld ein-/ausblenden
+    if (taskInput.style.display === "none") {
+        taskInput.style.display = "block";
+        taskInput.focus();
+    } else {
+        taskInput.style.display = "none";
+    }
+});
+
+document.getElementById("taskInput").addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        let taskText = this.value.trim();
+        if (taskText !== "") {
+            addTask(taskText);
+            this.value = "";
+            this.style.display = "none"; // Nach dem Hinzufügen wieder ausblenden
+        }
+    }
+});
+
+function addTask(text) {
+    let taskList = document.getElementById("taskList");
+
+    let li = document.createElement("li");
+    li.textContent = text;
+
+    // Häkchen-Button zum Erledigen
+    let checkButton = document.createElement("button");
+    checkButton.innerHTML = '<img src="assets/check.png" alt="Erledigt">';
+    checkButton.addEventListener("click", function () {
+        li.classList.toggle("done");
+    });
+
+    li.appendChild(checkButton);
+    taskList.appendChild(li);
+}

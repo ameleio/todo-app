@@ -26,19 +26,23 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
+
 button {
-    background-color: none;
-    color: white;
+    background: none;
     border: none;
-    padding: 10px;
-    margin: 5px;
+    padding: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    display: inline-flex; /* Damit das Icon schön zentriert ist */
+    align-items: center;
+    justify-content: center;
 }
 
 button img {
-    vertical-align: middle;
+    width: 30px; /* Größe des Icons anpassen */
+    height: auto;
 }
+
 
 #taskContainer.hidden {
     display: none;
@@ -54,4 +58,21 @@ li {
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
+}
+
+
+/* Eingabefeld standardmäßig verstecken */
+#taskInput {
+    display: none;
+}
+
+/* Box für Aufgaben */
+.task-box {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
