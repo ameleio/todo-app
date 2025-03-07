@@ -32,32 +32,15 @@
         <h1>Ziele</h1>
         <ul id="completedTasks"></ul>
 
-        <button id="showAllBtn">
-            <img src="assets/eye.png" width="30"> Alle anzeigen
-        </button>
+        <!-- Buttons für Anzeige & Hinzufügen -->
+    <button id="showAllTasks"><img src="assets/eye.png" alt="Alle anzeigen"></button>
+    <button id="addTask"><img src="assets/plus.png" alt="Hinzufügen"></button>
 
         <div id="taskContainer" class="hidden">
             <ul id="taskList"></ul>
         </div>
 
-        <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
-        <button id="addTaskBtn">
-            <img src="assets/check.png" width="30"> Hinzufügen
-        </button>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-<div class="container">
-    <h2>Ziele</h2>
-    
-    <!-- Buttons für Anzeige & Hinzufügen -->
-    <button id="showAllTasks"><img src="assets/eye.png" alt="Alle anzeigen"></button>
-    <button id="addTask"><img src="assets/plus.png" alt="Hinzufügen"></button>
-
-    <!-- Eingabefeld für neue Aufgaben -->
+        <!-- Eingabefeld für neue Aufgaben -->
     <input type="text" id="taskInput" placeholder="Neue Aufgabe eingeben...">
     
 </div>
@@ -66,3 +49,7 @@
 <div class="task-box">
     <ul id="taskList"></ul>
 </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
