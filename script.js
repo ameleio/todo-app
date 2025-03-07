@@ -1,35 +1,63 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let taskList = document.getElementById("taskList");
-    let completedTasks = document.getElementById("completedTasks");
-    let showAllBtn = document.getElementById("showAllBtn");
-    let taskContainer = document.getElementById("taskContainer");
+ddocument.addEventListener("DOMContentLoaded", function () {
+    const addTaskBtn = document.getElementById("addTaskBtn");
+    const newTaskInput = document.getElementById("newTask");
+    const taskList = document.getElementById("taskList");
+    const completedTasks = document.getElementById("completedTasks");
+    const showAllBtn = document.getElementById("showAllBtn");
+    const taskContainer = document.getElementById("taskContainer");
 
-    document.getElementById("addTaskBtn").addEventListener("click", function() {
-        let newTask = document.getElementById("newTask").value;
-        if (newTask.trim() !== "") {
-            let li = document.createElement("li");
+    // Lade gespeicherte Aufgaben
+    loadTasks();
 
-            // Text der Aufgabe
-            let span = document.createElement("span");
-            span.textContent = newTask;
-
-            // Häkchen-Button (zum Erledigen)
-            let checkBtn = document.createElement("img");
-            checkBtn.src = "assets/check.png";
-            checkBtn.classList.add("icon-btn");
-            checkBtn.addEventListener("click", function() {
-                completedTasks.appendChild(li);
-            });
-
-            li.appendChild(span);
-            li.appendChild(checkBtn);
-            taskList.appendChild(li);
-            document.getElementById("newTask").value = "";
+    addTaskBtn.addEventListener("click", function () {
+        const taskText = newTaskInput.value.trim();
+        if (taskText) {
+            addTask(taskText);
+            newTaskInput.value = "";
         }
     });
 
-    showAllBtn.addEventListener("click", function() {
-        taskContainer.style.display = "block";
-        setTimeout(() => taskContainer.style.display = "none", 3000);
+    showAllBtn.addEventListener("click", function () {
+        taskContainer.classList.remove("hidden");
+        setTimeout(() => taskContainer.classList.add("hidden"), 10000);
     });
+
+    function addTask(text) {
+        const li = document.createElement("li");
+        li.textContent = text;
+
+        li.addEventListener("click", function () {
+            taskList.removeChild(li);
+            completedTasks.appendChild(li);
+            saveTasks();
+        });
+
+        taskList.appendChild(li);
+        saveTasks();
+    }
+
+    function saveTasks() {
+        const tasks = Array.from(taskList.children).map(li => li.textContent);
+        const completed = Array.from(completedTasks.children).map(li => li.textContent);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        localStorage.setItem("completed", JSON.stringify(completed));
+    }
+
+    function loadTasks() {
+        const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+        const completed = JSON.parse(localStorage.getItem("completed") || "[]");
+
+        tasks.forEach(text => addTask(text));
+        completed.forEach(text => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            completedTasks.appendChild(li);
+        });
+    }
 });
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log("Service Worker registriert"))
+        .catch(error => console.log("Service Worker Fehler:", error));
+}

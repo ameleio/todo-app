@@ -1,12 +1,18 @@
 /* Hintergrund */
+html, body {
+    height: 100%; /* Stellt sicher, dass das Hintergrundbild den gesamten Bildschirm einnimmt */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
 body {
     background-image: url('assets/hintergrund.png'); /* Dein eigenes Hintergrundbild */
     background-size: cover;
-    background-position: center;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+    background-repeat: no-repeat; /* Verhindert Wiederholung des Bildes */
+    background-position: center; /* Zentriert das Bild */
+    background-attachment: scroll; /* Ändert das Verhalten auf Mobilgeräten */
 }
 
 /* Hauptcontainer */
@@ -20,61 +26,32 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* App-Überschrift */
-h1 {
-    font-size: 24px;
-    color: #333;
-}
-
-/* Eingabefeld */
-input[type="text"] {
-    width: 80%;
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
+    margin: 5px;
+    cursor: pointer;
     border-radius: 5px;
-    font-size: 16px;
 }
 
-/* Liste der Aufgaben */
+button img {
+    vertical-align: middle;
+}
+
+#taskContainer.hidden {
+    display: none;
+}
+
 ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
-/* Einzelne Aufgabe */
 li {
-    background: white;
+    background: #ddd;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Buttons */
-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-/* Icons für Buttons */
-.icon-btn {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
-
-/* Versteckte Liste (wird durch den Auge-Button sichtbar) */
-#taskContainer {
-    display: none;
 }

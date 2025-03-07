@@ -2,19 +2,30 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="style.css">
 
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Standard Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+<!-- SVG-Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<!-- PNG-Version -->
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+
+<!-- Apple-Touch-Icon für iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="/manifest.json">
 
 
-<link rel="manifest" href="manifest.json">
-
+    <!-- Meta-Tags für Darstellung -->
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Meine To-Do Liste">
 </head>
 <body>
     <div class="container">
@@ -25,7 +36,7 @@
             <img src="assets/eye.png" width="30"> Alle anzeigen
         </button>
 
-        <div id="taskContainer">
+        <div id="taskContainer" class="hidden">
             <ul id="taskList"></ul>
         </div>
 
