@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+ment.addEventListener("DOMContentLoaded", function () {
     const addTaskBtn = document.getElementById("addTaskBtn");
     const inputContainer = document.getElementById("inputContainer");
     const newTaskInput = document.getElementById("newTask");
@@ -27,16 +27,37 @@ document.addEventListener("DOMContentLoaded", function () {
         if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
             inputContainer.style.display = "flex";
             newTaskInput.focus();
-        } else {
-            const taskText = newTaskInput.value.trim();
-            if (taskText) {
-                addTaskToDOM(taskText, false);
-                saveTask(taskText);
-                newTaskInput.value = "";
-                inputContainer.style.display = "none";
-            }
+            addTaskBtn.style.display = "none"; // Plus-Button ausblenden
         }
     });
+
+    // Aufgabe hinzufügen, wenn Enter gedrückt wird oder Button geklickt wird
+    newTaskInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            addNewTask();
+        }
+    });
+
+    newTaskInput.addEventListener("blur", function () {
+        if (newTaskInput.value.trim() === "") {
+            resetInput(); // Falls nichts eingegeben wurde, alles zurücksetzen
+        }
+    });
+
+    function addNewTask() {
+        const taskText = newTaskInput.value.trim();
+        if (taskText) {
+            addTaskToDOM(taskText, false);
+            saveTask(taskText);
+            newTaskInput.value = "";
+            resetInput(); // Nach dem Hinzufügen alles zurücksetzen
+        }
+    }
+
+    function resetInput() {
+        inputContainer.style.display = "none";
+        addTaskBtn.style.display = "block"; // Plus-Button wieder einblenden
+    }
 
     // Aufgabe ins DOM einfügen
     function addTaskToDOM(taskText, isCompleted) {
