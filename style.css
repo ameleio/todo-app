@@ -1,18 +1,15 @@
 /* Hintergrund */
-html, body {
-    height: 100%; /* Stellt sicher, dass das Hintergrundbild den gesamten Bildschirm einnimmt */
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
 body {
     background-image: url('assets/hintergrund.png'); /* Dein eigenes Hintergrundbild */
     background-size: cover;
     background-repeat: no-repeat; /* Verhindert Wiederholung des Bildes */
     background-position: center; /* Zentriert das Bild */
     background-attachment: scroll; /* Ändert das Verhalten auf Mobilgeräten */
+    min-height: 100vh; /* Stellt sicher, dass das Hintergrundbild den gesamten Bildschirm einnimmt */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 /* Hauptcontainer */
@@ -26,26 +23,9 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-
-button {
-    background: none;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    display: inline-flex; /* Damit das Icon schön zentriert ist */
-    align-items: center;
-    justify-content: center;
-}
-
-button img {
-    width: 30px; /* Größe des Icons anpassen */
-    height: auto;
-}
-
-
-#taskContainer.hidden {
-    display: none;
+/* Aufgabenliste */
+#taskContainer {
+    margin-top: 20px;
 }
 
 ul {
@@ -58,21 +38,41 @@ li {
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-
-/* Eingabefeld standardmäßig verstecken */
-#taskInput {
+/* Verstecktes Eingabefeld */
+#taskInputContainer {
     display: none;
+    margin-top: 10px;
 }
 
-/* Box für Aufgaben */
-.task-box {
-    width: 90%;
-    max-width: 400px;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Buttons */
+button {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button img {
+    width: 40px; /* Größe der Icons */
+    height: auto;
+}
+
+/* Buttons für die richtige Platzierung */
+#buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Versteckte Liste */
+.hidden {
+    display: none;
 }

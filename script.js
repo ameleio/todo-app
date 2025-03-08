@@ -1,106 +1,83 @@
-ddocument.addEventListener("DOMContentLoaded", function () {
-    const addTaskBtn = document.getElementById("addTaskBtn");
+document.addEventListener("DOMContentLoaded", function () {
+    const addTaskBtn = document.getElementById("addTask");
+    const confirmAddTaskBtn = document.getElementById("confirmAddTask");
     const newTaskInput = document.getElementById("newTask");
     const taskList = document.getElementById("taskList");
     const completedTasks = document.getElementById("completedTasks");
     const showAllBtn = document.getElementById("showAllBtn");
-    const taskContainer = document.getElementById("taskContainer");
+    const taskInputContainer = document.getElementById("taskInputContainer");
 
-    // Lade gespeicherte Aufgaben
-    loadTasks();
+    let showHiddenTasks = false;
 
+    // Plus-Button klickt -> Eingabefeld erscheint
     addTaskBtn.addEventListener("click", function () {
+        taskInputContainer.style.display = taskInputContainer.style.display === "none" ? "block" : "none";
+    });
+
+    // Aufgabe hinzufügen
+    confirmAddTaskBtn.addEventListener("click", function () {
         const taskText = newTaskInput.value.trim();
-        if (taskText) {
+        if (taskText !== "") {
             addTask(taskText);
             newTaskInput.value = "";
+            taskInputContainer.style.display = "none"; // Eingabefeld wieder ausblenden
         }
     });
 
+    // Zeige versteckte Aufgaben für 10 Sekunden
     showAllBtn.addEventListener("click", function () {
-        taskContainer.classList.remove("hidden");
-        setTimeout(() => taskContainer.classList.add("hidden"), 10000);
+        const hiddenTasks = document.querySelectorAll("#taskList .hidden");
+        hiddenTasks.forEach(task => task.classList.remove("hidden"));
+
+        setTimeout(() => {
+            hiddenTasks.forEach(task => task.classList.add("hidden"));
+        }, 10000);
     });
 
-    function addTask(text) {
+    // Funktion zum Hinzufügen einer Aufgabe
+    function addTask(taskText) {
         const li = document.createElement("li");
-        li.textContent = text;
+        li.innerHTML = `<span>${taskText}</span> <button class="completeTask"><img src="assets/check.png" alt="Erledigt"></button>`;
+        taskList.appendChild(li);
 
-        li.addEventListener("click", function () {
-            taskList.removeChild(li);
-            completedTasks.appendChild(li);
-            saveTasks();
+        // Klick auf Häkchen -> Aufgabe erledigt
+        li.querySelector(".completeTask").addEventListener("click", function () {
+            completeTask(li);
         });
 
-        taskList.appendChild(li);
         saveTasks();
     }
 
-    function saveTasks() {
-        const tasks = Array.from(taskList.children).map(li => li.textContent);
-        const completed = Array.from(completedTasks.children).map(li => li.textContent);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        localStorage.setItem("completed", JSON.stringify(completed));
+    // Aufgabe als erledigt markieren
+    function completeTask(taskElement) {
+        taskElement.querySelector(".completeTask").remove(); // Häkchen entfernen
+        completedTasks.appendChild(taskElement);
+        saveTasks();
     }
 
-    function loadTasks() {
-        const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-        const completed = JSON.parse(localStorage.getItem("completed") || "[]");
+    // Speichere Aufgaben in LocalStorage
+    function saveTasks() {
+        const tasks = [];
+        taskList.querySelectorAll("li").forEach(li => tasks.push(li.textContent));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
 
-        tasks.forEach(text => addTask(text));
-        completed.forEach(text => {
+        const completed = [];
+        completedTasks.querySelectorAll("li").forEach(li => completed.push(li.textContent));
+        localStorage.setItem("completedTasks", JSON.stringify(completed));
+    }
+
+    // Lade Aufgaben beim Start
+    function loadTasks() {
+        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.forEach(task => addTask(task));
+
+        const completed = JSON.parse(localStorage.getItem("completedTasks")) || [];
+        completed.forEach(task => {
             const li = document.createElement("li");
-            li.textContent = text;
+            li.innerHTML = `<span>${task}</span>`;
             completedTasks.appendChild(li);
         });
     }
+
+    loadTasks();
 });
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log("Service Worker registriert"))
-        .catch(error => console.log("Service Worker Fehler:", error));
-}
-
-
-
-
-document.getElementById("addTask").addEventListener("click", function () {
-    let taskInput = document.getElementById("taskInput");
-    
-    // Eingabefeld ein-/ausblenden
-    if (taskInput.style.display === "none") {
-        taskInput.style.display = "block";
-        taskInput.focus();
-    } else {
-        taskInput.style.display = "none";
-    }
-});
-
-document.getElementById("taskInput").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        let taskText = this.value.trim();
-        if (taskText !== "") {
-            addTask(taskText);
-            this.value = "";
-            this.style.display = "none"; // Nach dem Hinzufügen wieder ausblenden
-        }
-    }
-});
-
-function addTask(text) {
-    let taskList = document.getElementById("taskList");
-
-    let li = document.createElement("li");
-    li.textContent = text;
-
-    // Häkchen-Button zum Erledigen
-    let checkButton = document.createElement("button");
-    checkButton.innerHTML = '<img src="assets/check.png" alt="Erledigt">';
-    checkButton.addEventListener("click", function () {
-        li.classList.toggle("done");
-    });
-
-    li.appendChild(checkButton);
-    taskList.appendChild(li);
-}

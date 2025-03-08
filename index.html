@@ -2,53 +2,44 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="style.css">
 
-
-  <!-- Standard Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-<!-- SVG-Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-<!-- PNG-Version -->
-<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-
-<!-- Apple-Touch-Icon für iOS -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-<!-- Web App Manifest -->
-<link rel="manifest" href="/manifest.json">
-
-
-    <!-- Meta-Tags für Darstellung -->
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="Meine To-Do Liste">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
+
     <div class="container">
         <h1>Ziele</h1>
-        <ul id="completedTasks"></ul>
 
-        <!-- Buttons für Anzeige & Hinzufügen -->
-    <button id="showAllTasks"><img src="assets/eye.png" alt="Alle anzeigen"></button>
-    <button id="addTask"><img src="assets/plus.png" alt="Hinzufügen"></button>
+        <div id="buttonContainer">
+            <!-- Plus-Button -->
+            <button id="addTask"><img src="assets/plus_custom.png" alt="Hinzufügen"></button>
 
-        <div id="taskContainer" class="hidden">
+            <!-- Augen-Button -->
+            <button id="showAllBtn"><img src="assets/eye.png" alt="Alle anzeigen"></button>
+        </div>
+
+        <!-- Eingabefeld (versteckt) -->
+        <div id="taskInputContainer">
+            <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
+            <button id="confirmAddTask"><img src="assets/check.png" alt="Bestätigen"></button>
+        </div>
+
+        <!-- Aufgabenliste -->
+        <div id="taskContainer">
             <ul id="taskList"></ul>
         </div>
 
-        <!-- Eingabefeld für neue Aufgaben -->
-    <input type="text" id="taskInput" placeholder="Neue Aufgabe eingeben...">
-    
-</div>
-
-<!-- Aufgabenliste in einer eigenen Box -->
-<div class="task-box">
-    <ul id="taskList"></ul>
-</div>
+        <!-- Erledigte Aufgaben -->
+        <h2>Erledigte Aufgaben</h2>
+        <ul id="completedTasks"></ul>
+    </div>
 
     <script src="script.js"></script>
 </body>
