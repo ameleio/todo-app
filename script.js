@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Aufgabe hinzufügen, wenn Enter gedrückt wird oder Button geklickt wird
     newTaskInput.addEventListener("click", function () {
         addNewTask();
-        }
     });
+  
 
     newTaskInput.addEventListener("blur", function () {
         if (newTaskInput.value.trim() === "") {
