@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     const addTaskBtn = document.getElementById("addTaskBtn");
     const inputContainer = document.getElementById("inputContainer");
-    const confirmAddTask = document.getElementById("confirmAddTask");
     const newTaskInput = document.getElementById("newTask");
     const taskList = document.getElementById("taskList");
     const completedTasksContainer = document.getElementById("completedTasksContainer");
     const showAllBtn = document.getElementById("showAllBtn");
+
+    let tasksVisible = false; // Speichert, ob die Aufgaben aktuell sichtbar sind
 
     // Aufgaben aus localStorage laden
     function loadTasks() {
@@ -21,19 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadTasks();
 
-    // Eingabefeld einblenden
+    // Eingabefeld anzeigen/verstecken oder neue Aufgabe hinzufügen
     addTaskBtn.addEventListener("click", function () {
-        inputContainer.style.display = "flex";
-    });
-
-    // Aufgabe hinzufügen
-    confirmAddTask.addEventListener("click", function () {
-        const taskText = newTaskInput.value.trim();
-        if (taskText) {
-            addTaskToDOM(taskText, false);
-            saveTask(taskText);
-            newTaskInput.value = "";
-            inputContainer.style.display = "none";
+        if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
+            inputContainer.style.display = "flex";
+            newTaskInput.focus();
+        } else {
+            const taskText = newTaskInput.value.trim();
+            if (taskText) {
+                addTaskToDOM(taskText, false);
+                saveTask(taskText);
+                newTaskInput.value = "";
+                inputContainer.style.display = "none";
+            }
         }
     });
 
@@ -108,11 +109,22 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("completedTasks", JSON.stringify(savedCompletedTasks));
     }
 
-    // Alle Aufgaben für 10 Sekunden anzeigen
+    // Aufgaben manuell ein-/ausblenden
     showAllBtn.addEventListener("click", function () {
-        taskList.classList.remove("hidden");
-        setTimeout(() => {
+        tasksVisible = !tasksVisible; // Zustand umkehren
+
+        if (tasksVisible) {
+            taskList.classList.remove("hidden");
+
+            // Automatisch nach 10 Sekunden wieder ausblenden
+            setTimeout(() => {
+                if (tasksVisible) { // Nur ausblenden, wenn der Nutzer nicht selbst wieder eingeschaltet hat
+                    taskList.classList.add("hidden");
+                    tasksVisible = false;
+                }
+            }, 10000);
+        } else {
             taskList.classList.add("hidden");
-        }, 10000);
+        }
     });
 });
