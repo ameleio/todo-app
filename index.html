@@ -17,16 +17,16 @@
             <button id="addTaskBtn" class="icon-button">
                 <img src="assets/plus.png" alt="Aufgabe hinzufügen">
             </button>
+
+            <div id="inputContainer">
+                <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
+                <button id="confirmAddTask" class="icon-button">
+                    <img src="assets/plus.png" alt="Bestätigen">
+                </button>
+            </div>
+
             <button id="showAllBtn" class="icon-button">
                 <img src="assets/eye.png" alt="Alle anzeigen">
-            </button>
-        </div>
-
-        <!-- Eingabefeld (versteckt, bis man auf Plus klickt) -->
-        <div id="inputContainer">
-            <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
-            <button id="confirmAddTask" class="icon-button">
-                <img src="assets/check.png" alt="Bestätigen">
             </button>
         </div>
 
@@ -34,8 +34,8 @@
         <ul id="taskList" class="hidden"></ul>
     </div>
 
-    <!-- Erledigte Aufgaben (direkt auf dem Hintergrund) -->
-    <ul id="completedTasks"></ul>
+    <!-- Erledigte Aufgaben (mit eigener Box) -->
+    <div id="completedTasksContainer"></div>
 
     <script src="script.js"></script>
 </body>

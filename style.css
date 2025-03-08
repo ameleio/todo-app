@@ -1,6 +1,6 @@
 /* Hintergrund */
 body {
-    background-image: url('assets/hintergrund.png'); /* Dein eigenes Hintergrundbild */
+    background-image: url('assets/hintergrund.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -10,6 +10,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    color: darkslategrey; /* Schriftfarbe für die ganze Seite */
 }
 
 /* Hauptcontainer */
@@ -23,15 +24,32 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Button-Container (zentriert unter "Ziele") */
+/* Button-Container (Ziele) */
 #buttonContainer {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
     margin-top: 10px;
 }
 
-/* Buttons (keine Hintergrundfarbe oder Rahmen, nur Icons sichtbar) */
+/* Eingabefeld erscheint neben dem Plus-Button */
+#inputContainer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#newTask {
+    padding: 8px;
+    border: 1px solid darkslategrey;
+    border-radius: 5px;
+    font-size: 16px;
+    color: darkslategrey;
+}
+
+/* Buttons: Nur Icons sichtbar */
 .icon-button {
     background: none;
     border: none;
@@ -44,27 +62,38 @@ body {
     height: 40px;
 }
 
-/* Eingabefeld soll erst sichtbar sein, wenn Plus-Button gedrückt wurde */
-#inputContainer {
-    display: none;
-    margin-top: 10px;
-}
-
 /* Aufgabenliste */
 #taskList {
     list-style-type: none;
     padding: 0;
 }
 
-/* Erledigte Aufgaben – KEINE Box, direkt auf dem Hintergrund */
-#completedTasks {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
+/* Erledigte Aufgaben: Eigene Boxen mit X-Button */
+.completed-task {
+    background: rgba(255, 255, 255, 0.7); /* 30% transparenter */
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#completedTasks li {
-    color: white;
+.completed-task span {
+    flex-grow: 1;
+}
+
+/* X-Button */
+.remove-btn {
+    background: none;
+    border: none;
+    color: darkslategrey;
     font-size: 18px;
-    margin: 5px 0;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmAddTask = document.getElementById("confirmAddTask");
     const newTaskInput = document.getElementById("newTask");
     const taskList = document.getElementById("taskList");
-    const completedTasks = document.getElementById("completedTasks");
+    const completedTasksContainer = document.getElementById("completedTasksContainer");
     const showAllBtn = document.getElementById("showAllBtn");
 
     // Aufgaben aus localStorage laden
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const savedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
 
         taskList.innerHTML = "";
-        completedTasks.innerHTML = "";
+        completedTasksContainer.innerHTML = "";
 
         savedTasks.forEach(task => addTaskToDOM(task, false));
         savedCompletedTasks.forEach(task => addTaskToDOM(task, true));
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Eingabefeld einblenden
     addTaskBtn.addEventListener("click", function () {
-        inputContainer.style.display = "block";
+        inputContainer.style.display = "flex";
     });
 
     // Aufgabe hinzufügen
@@ -52,7 +52,22 @@ document.addEventListener("DOMContentLoaded", function () {
             li.appendChild(checkButton);
             taskList.appendChild(li);
         } else {
-            completedTasks.appendChild(li);
+            const taskDiv = document.createElement("div");
+            taskDiv.classList.add("completed-task");
+
+            const taskSpan = document.createElement("span");
+            taskSpan.textContent = taskText;
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-btn");
+            removeButton.textContent = "✖";
+            removeButton.addEventListener("click", function () {
+                removeCompletedTask(taskText);
+            });
+
+            taskDiv.appendChild(taskSpan);
+            taskDiv.appendChild(removeButton);
+            completedTasksContainer.appendChild(taskDiv);
         }
     }
 
@@ -63,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         saveCompletedTask(taskText);
     }
 
-    // Aufgabe aus Speicher entfernen
+    // Aufgabe entfernen
     function removeTask(taskText) {
         let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         savedTasks = savedTasks.filter(task => task !== taskText);
@@ -72,7 +87,15 @@ document.addEventListener("DOMContentLoaded", function () {
         loadTasks();
     }
 
-    // Aufgaben speichern
+    function removeCompletedTask(taskText) {
+        let savedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+        savedCompletedTasks = savedCompletedTasks.filter(task => task !== taskText);
+        localStorage.setItem("completedTasks", JSON.stringify(savedCompletedTasks));
+
+        loadTasks();
+    }
+
+    // Speichern
     function saveTask(taskText) {
         const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         savedTasks.push(taskText);
