@@ -32,9 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Aufgabe hinzufügen, wenn Enter gedrückt wird oder Button geklickt wird
-    newTaskInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            addNewTask();
+    newTaskInput.addEventListener("click", function () {
+        addNewTask();
         }
     });
 
