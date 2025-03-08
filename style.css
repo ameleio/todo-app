@@ -23,60 +23,48 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Buttons */
-button {
-    background: none;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button img {
-    width: 40px; /* Größe der Icons */
-    height: auto;
-}
-
-/* Container für Plus- und Augen-Button */
+/* Button-Container (zentriert unter "Ziele") */
 #buttonContainer {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Buttons (keine Hintergrundfarbe oder Rahmen, nur Icons sichtbar) */
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.icon-button img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Eingabefeld soll erst sichtbar sein, wenn Plus-Button gedrückt wurde */
+#inputContainer {
+    display: none;
+    margin-top: 10px;
 }
 
 /* Aufgabenliste */
-#taskContainer {
-    margin-top: 20px;
-}
-
-/* Liste */
-ul {
+#taskList {
     list-style-type: none;
     padding: 0;
 }
 
-li {
-    background: #ddd;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Box für erledigte Aufgaben */
-#completedContainer {
+/* Erledigte Aufgaben – KEINE Box, direkt auf dem Hintergrund */
+#completedTasks {
+    list-style-type: none;
+    padding: 0;
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Versteckte Elemente */
-.hidden {
-    display: none;
+#completedTasks li {
+    color: white;
+    font-size: 18px;
+    margin: 5px 0;
 }

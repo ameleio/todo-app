@@ -5,37 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
     <div class="container">
         <h1>Ziele</h1>
 
+        <!-- Plus & Augen-Button -->
         <div id="buttonContainer">
-            <!-- Plus-Button -->
-            <button id="addTask"><img src="assets/plus.png" alt="Hinzufügen"></button>
-
-            <!-- Augen-Button -->
-            <button id="showAllBtn"><img src="assets/eye.png" alt="Alle anzeigen"></button>
+            <button id="addTaskBtn" class="icon-button">
+                <img src="assets/plus.png" alt="Aufgabe hinzufügen">
+            </button>
+            <button id="showAllBtn" class="icon-button">
+                <img src="assets/eye.png" alt="Alle anzeigen">
+            </button>
         </div>
 
-        <!-- Eingabefeld (versteckt) -->
-        <div id="taskInputContainer" class="hidden">
+        <!-- Eingabefeld (versteckt, bis man auf Plus klickt) -->
+        <div id="inputContainer">
             <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
-            <button id="confirmAddTask"><img src="assets/check.png" alt="Bestätigen"></button>
+            <button id="confirmAddTask" class="icon-button">
+                <img src="assets/check.png" alt="Bestätigen">
+            </button>
         </div>
 
-        <!-- Nicht erledigte Aufgaben -->
-        <div id="taskContainer">
-            <ul id="taskList"></ul>
-        </div>
-
-        <!-- Erledigte Aufgaben -->
-        <div id="completedContainer">
-            <h2>Erledigte Aufgaben</h2>
-            <ul id="completedTasks"></ul>
-        </div>
+        <!-- Aufgabenliste (versteckt) -->
+        <ul id="taskList" class="hidden"></ul>
     </div>
+
+    <!-- Erledigte Aufgaben (direkt auf dem Hintergrund) -->
+    <ul id="completedTasks"></ul>
 
     <script src="script.js"></script>
 </body>
