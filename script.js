@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const showAllBtn = document.getElementById("showAllBtn");
     const taskInputContainer = document.getElementById("taskInputContainer");
 
-    let showHiddenTasks = false;
+    let hiddenTasks = []; // Speichert die versteckten Aufgaben
 
     // Plus-Button klickt -> Eingabefeld erscheint
     addTaskBtn.addEventListener("click", function () {
-        taskInputContainer.style.display = taskInputContainer.style.display === "none" ? "block" : "none";
+        taskInputContainer.classList.toggle("hidden");
     });
 
     // Aufgabe hinzufügen
@@ -20,13 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (taskText !== "") {
             addTask(taskText);
             newTaskInput.value = "";
-            taskInputContainer.style.display = "none"; // Eingabefeld wieder ausblenden
+            taskInputContainer.classList.add("hidden"); // Eingabefeld wieder ausblenden
         }
     });
 
     // Zeige versteckte Aufgaben für 10 Sekunden
     showAllBtn.addEventListener("click", function () {
-        const hiddenTasks = document.querySelectorAll("#taskList .hidden");
         hiddenTasks.forEach(task => task.classList.remove("hidden"));
 
         setTimeout(() => {
@@ -45,13 +44,21 @@ document.addEventListener("DOMContentLoaded", function () {
             completeTask(li);
         });
 
+        // Neue Aufgabe wird erst sichtbar, dann nach 10 Sekunden ausgeblendet
+        hiddenTasks.push(li);
+        setTimeout(() => {
+            li.classList.add("hidden");
+        }, 10000);
+
         saveTasks();
     }
 
     // Aufgabe als erledigt markieren
     function completeTask(taskElement) {
         taskElement.querySelector(".completeTask").remove(); // Häkchen entfernen
+        taskElement.classList.remove("hidden"); // Falls sie versteckt war, anzeigen
         completedTasks.appendChild(taskElement);
+        hiddenTasks = hiddenTasks.filter(task => task !== taskElement); // Entferne aus versteckter Liste
         saveTasks();
     }
 

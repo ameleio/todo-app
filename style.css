@@ -2,10 +2,10 @@
 body {
     background-image: url('assets/hintergrund.png'); /* Dein eigenes Hintergrundbild */
     background-size: cover;
-    background-repeat: no-repeat; /* Verhindert Wiederholung des Bildes */
-    background-position: center; /* Zentriert das Bild */
-    background-attachment: scroll; /* Ändert das Verhalten auf Mobilgeräten */
-    min-height: 100vh; /* Stellt sicher, dass das Hintergrundbild den gesamten Bildschirm einnimmt */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: scroll;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
@@ -21,32 +21,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Aufgabenliste */
-#taskContainer {
-    margin-top: 20px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background: #ddd;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Verstecktes Eingabefeld */
-#taskInputContainer {
-    display: none;
-    margin-top: 10px;
 }
 
 /* Buttons */
@@ -65,14 +39,44 @@ button img {
     height: auto;
 }
 
-/* Buttons für die richtige Platzierung */
+/* Container für Plus- und Augen-Button */
 #buttonContainer {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-/* Versteckte Liste */
+/* Aufgabenliste */
+#taskContainer {
+    margin-top: 20px;
+}
+
+/* Liste */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #ddd;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Box für erledigte Aufgaben */
+#completedContainer {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Versteckte Elemente */
 .hidden {
     display: none;
 }
