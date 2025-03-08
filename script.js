@@ -90,6 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
         taskList.classList.remove("hidden");
         setTimeout(() => {
             taskList.classList.add("hidden");
-        }, 5000);
+        }, 10000);
     });
 });
