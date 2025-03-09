@@ -112,17 +112,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function removeTask(taskText) {
         let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        savedTasks = savedTasks.filter(task => task !== taskText);
+    
+        // Finde die erste Übereinstimmung und entferne sie
+        const taskIndex = savedTasks.indexOf(taskText);
+        if (taskIndex !== -1) {
+            savedTasks.splice(taskIndex, 1);
+        }
+    
         localStorage.setItem("tasks", JSON.stringify(savedTasks));
-
         loadTasks();
     }
-
+    
     function removeCompletedTask(taskText) {
         let savedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
-        savedCompletedTasks = savedCompletedTasks.filter(task => task !== taskText);
+    
+        // Finde die erste Übereinstimmung und entferne sie
+        const taskIndex = savedCompletedTasks.indexOf(taskText);
+        if (taskIndex !== -1) {
+            savedCompletedTasks.splice(taskIndex, 1);
+        }
+    
         localStorage.setItem("completedTasks", JSON.stringify(savedCompletedTasks));
-
         loadTasks();
     }
 
