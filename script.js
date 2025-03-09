@@ -25,44 +25,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadTasks();
 
-    // Eingabefeld anzeigen/verstecken oder neue Aufgabe hinzufügen
+    // Plus-Button steuert das Eingabefeld & das Hinzufügen von Aufgaben
     addTaskBtn.addEventListener("click", function () {
         if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
+            // Eingabefeld anzeigen
             inputContainer.style.display = "flex";
             newTaskInput.focus();
-            addTaskBtn.removeEventListener("click", showInputField); // Verhindert doppelte Events
-            addTaskBtn.addEventListener("click", addNewTask); // Button zum Hinzufügen umfunktionieren
+        } else {
+            const taskText = newTaskInput.value.trim();
+            if (taskText) {
+                // Aufgabe hinzufügen
+                addNewTask(taskText);
+                newTaskInput.value = "";
+                inputContainer.style.display = "none"; // Eingabefeld ausblenden
+            } else {
+                // Eingabefeld ausblenden, wenn leer
+                inputContainer.style.display = "none";
+            }
         }
     });
 
-    // Aufgabe hinzufügen, wenn Enter gedrückt wird oder Button geklickt wird
+    // Aufgabe hinzufügen, wenn Enter gedrückt wird
     newTaskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
-            addNewTask();
+            const taskText = newTaskInput.value.trim();
+            if (taskText) {
+                addNewTask(taskText);
+                newTaskInput.value = "";
+                inputContainer.style.display = "none"; // Eingabefeld ausblenden
+            }
         }
     });
 
-    function addNewTask() {
-        const taskText = newTaskInput.value.trim();
-        if (taskText) {
-            addTaskToDOM(taskText, false);
-            saveTask(taskText);
-            newTaskInput.value = "";
-            resetInput(); // Nach dem Hinzufügen alles zurücksetzen
-        }
-    }
-
-    function resetInput() {
-        inputContainer.style.display = "none";
-        addTaskBtn.removeEventListener("click", addNewTask);
-        addTaskBtn.addEventListener("click", showInputField);
-    }
-
-    function showInputField() {
-        inputContainer.style.display = "flex";
-        newTaskInput.focus();
-        addTaskBtn.removeEventListener("click", showInputField);
-        addTaskBtn.addEventListener("click", addNewTask);
+    function addNewTask(taskText) {
+        addTaskToDOM(taskText, false);
+        saveTask(taskText);
     }
 
     // Aufgabe ins DOM einfügen
