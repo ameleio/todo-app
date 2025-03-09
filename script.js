@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const plus1 = document.getElementById("plus1"); // Button 1 (Eingabefeld anzeigen)
-    const plus2 = document.getElementById("plus2"); // Button 2 (Aufgabe hinzufügen)
-    const inputContainer = document.getElementById("inputContainer"); // Eingabebereich
-    const newTaskInput = document.getElementById("newTask"); // Eingabefeld
+    const plus1 = document.getElementById("plus1");
+    const plus2 = document.getElementById("plus2");
+    const inputContainer = document.getElementById("inputContainer");
+    const newTaskInput = document.getElementById("newTask");
     const taskList = document.getElementById("taskList");
     const completedTasksContainer = document.getElementById("completedTasksContainer");
     const showAllBtn = document.getElementById("showAllBtn");
 
     let tasksVisible = false;
 
-    // Scrollen auf Mobilgeräten deaktivieren
+    // Mobil-Zoom deaktivieren
     document.body.style.overflow = "hidden";
 
     function loadTasks() {
@@ -25,15 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadTasks();
 
-    // Plus1 (Eingabefeld anzeigen)
     plus1.addEventListener("click", function () {
-        inputContainer.style.display = "flex"; // Eingabefeld anzeigen
-        plus1.style.display = "none"; // Plus1 verstecken
-        plus2.style.display = "inline-block"; // Plus2 anzeigen
+        inputContainer.style.display = "flex";
+        plus1.style.display = "none";
+        plus2.style.display = "inline-block";
         newTaskInput.focus();
     });
 
-    // Plus2 (Aufgabe hinzufügen oder Eingabefeld schließen)
     plus2.addEventListener("click", function () {
         const taskText = newTaskInput.value.trim();
 
@@ -41,13 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
             addNewTask(taskText);
         }
 
-        // Eingabefeld & Plus2 ausblenden, Plus1 wieder anzeigen
         inputContainer.style.display = "none";
         plus2.style.display = "none";
         plus1.style.display = "inline-block";
     });
 
-    // Aufgabe hinzufügen durch Enter-Taste
     newTaskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             const taskText = newTaskInput.value.trim();
@@ -77,7 +73,16 @@ document.addEventListener("DOMContentLoaded", function () {
             checkButton.addEventListener("click", function () {
                 completeTask(taskText);
             });
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-btn");
+            removeButton.textContent = "✖";
+            removeButton.addEventListener("click", function () {
+                removeTask(taskText);
+            });
+
             li.appendChild(checkButton);
+            li.appendChild(removeButton);
             taskList.appendChild(li);
         } else {
             const taskDiv = document.createElement("div");
@@ -150,3 +155,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+

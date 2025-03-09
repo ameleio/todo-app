@@ -86,13 +86,20 @@ body {
 }
 
 /* X-Button */
+
 .remove-btn {
     background: none;
     border: none;
     color: darkslategrey;
     font-size: 18px;
     cursor: pointer;
+    margin-left: 10px;
 }
+
+.remove-btn:hover {
+    color: red;
+}
+
 
 .hidden {
     display: none;
