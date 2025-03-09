@@ -1,18 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const addTaskBtn = document.getElementById("addTaskBtn"); // Plus-Button
-    const inputContainer = document.getElementById("inputContainer"); // Eingabefeld + Button
-    const newTaskInput = document.getElementById("newTask"); // Textfeld
-    const addTaskConfirmBtn = document.getElementById("addTaskConfirmBtn"); // Bestätigungs-Plus
+    const plus1 = document.getElementById("plus1"); // Button 1 (Eingabefeld anzeigen)
+    const plus2 = document.getElementById("plus2"); // Button 2 (Aufgabe hinzufügen)
+    const inputContainer = document.getElementById("inputContainer"); // Eingabebereich
+    const newTaskInput = document.getElementById("newTask"); // Eingabefeld
     const taskList = document.getElementById("taskList");
     const completedTasksContainer = document.getElementById("completedTasksContainer");
     const showAllBtn = document.getElementById("showAllBtn");
 
-    let tasksVisible = false; // Speichert, ob die Aufgaben aktuell sichtbar sind
+    let tasksVisible = false;
 
     // Scrollen auf Mobilgeräten deaktivieren
     document.body.style.overflow = "hidden";
 
-    // Aufgaben aus localStorage laden
     function loadTasks() {
         const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         const savedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
@@ -26,48 +25,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadTasks();
 
-    // Plus-Button steuert das Eingabefeld & das Hinzufügen von Aufgaben
-    addTaskBtn.addEventListener("click", function () {
-        if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
-            // Eingabefeld anzeigen + rechten Plus-Button ausblenden
-            inputContainer.style.display = "flex";
-            addTaskBtn.style.display = "none";
-            newTaskInput.focus();
-        } else {
-            // Eingabefeld ausblenden & rechten Plus-Button wieder anzeigen
-            inputContainer.style.display = "none";
-            addTaskBtn.style.display = "inline-block";
-        }
+    // Plus1 (Eingabefeld anzeigen)
+    plus1.addEventListener("click", function () {
+        inputContainer.style.display = "flex"; // Eingabefeld anzeigen
+        plus1.style.display = "none"; // Plus1 verstecken
+        plus2.style.display = "inline-block"; // Plus2 anzeigen
+        newTaskInput.focus();
     });
 
-    // Aufgabe hinzufügen, wenn auf das Bestätigungs-Plus geklickt wird
-    addTaskConfirmBtn.addEventListener("click", function () {
-        addTask();
-    });
-
-    // Aufgabe hinzufügen, wenn Enter gedrückt wird
-    newTaskInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            addTask();
-        }
-    });
-
-    function addTask() {
+    // Plus2 (Aufgabe hinzufügen oder Eingabefeld schließen)
+    plus2.addEventListener("click", function () {
         const taskText = newTaskInput.value.trim();
+
         if (taskText) {
             addNewTask(taskText);
-            newTaskInput.value = "";
-            inputContainer.style.display = "none"; // Eingabefeld ausblenden
-            addTaskBtn.style.display = "inline-block"; // Rechten Plus-Button wieder einblenden
         }
-    }
+
+        // Eingabefeld & Plus2 ausblenden, Plus1 wieder anzeigen
+        inputContainer.style.display = "none";
+        plus2.style.display = "none";
+        plus1.style.display = "inline-block";
+    });
+
+    // Aufgabe hinzufügen durch Enter-Taste
+    newTaskInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            const taskText = newTaskInput.value.trim();
+            if (taskText) {
+                addNewTask(taskText);
+                inputContainer.style.display = "none";
+                plus2.style.display = "none";
+                plus1.style.display = "inline-block";
+            }
+        }
+    });
 
     function addNewTask(taskText) {
         addTaskToDOM(taskText, false);
         saveTask(taskText);
+        newTaskInput.value = "";
     }
 
-    // Aufgabe ins DOM einfügen
     function addTaskToDOM(taskText, isCompleted) {
         const li = document.createElement("li");
         li.textContent = taskText;
@@ -101,14 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Aufgabe als erledigt markieren
     function completeTask(taskText) {
         removeTask(taskText);
         addTaskToDOM(taskText, true);
         saveCompletedTask(taskText);
     }
 
-    // Aufgabe entfernen
     function removeTask(taskText) {
         let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         savedTasks = savedTasks.filter(task => task !== taskText);
@@ -125,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
         loadTasks();
     }
 
-    // Speichern
     function saveTask(taskText) {
         const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         savedTasks.push(taskText);
@@ -138,16 +133,14 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("completedTasks", JSON.stringify(savedCompletedTasks));
     }
 
-    // Aufgaben manuell ein-/ausblenden
     showAllBtn.addEventListener("click", function () {
-        tasksVisible = !tasksVisible; // Zustand umkehren
+        tasksVisible = !tasksVisible;
 
         if (tasksVisible) {
             taskList.classList.remove("hidden");
 
-            // Automatisch nach 10 Sekunden wieder ausblenden
             setTimeout(() => {
-                if (tasksVisible) { // Nur ausblenden, wenn der Nutzer nicht selbst wieder eingeschaltet hat
+                if (tasksVisible) {
                     taskList.classList.add("hidden");
                     tasksVisible = false;
                 }
