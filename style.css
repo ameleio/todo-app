@@ -1,106 +1,79 @@
-/* Hintergrund */
+/* Allgemeine Stile */
 body {
+    font-family: Arial, sans-serif;
     background-image: url('assets/hintergrund.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: scroll;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
+    background-attachment: fixed;
     text-align: center;
     margin: 0;
     padding: 0;
-    color: darkslategrey; /* Schriftfarbe für die ganze Seite */
+    overflow: hidden;
+    color: darkslategrey;
 }
 
-/* Hauptcontainer */
+/* Container für Ziele */
 .container {
     width: 90%;
     max-width: 400px;
-    margin: 50px auto;
-    background: rgba(255, 255, 255, 0.7);
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Button-Container (Ziele) */
-#buttonContainer {
+/* Button Styling */
+.icon-btn {
+    width: 30px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.button-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 15px;
 }
 
-/* Eingabefeld erscheint neben dem Plus-Button */
-#inputContainer {
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-#newTask {
-    padding: 8px;
-    border: 1px solid darkslategrey;
-    border-radius: 5px;
-    font-size: 16px;
-    color: darkslategrey;
-}
-
-/* Buttons: Nur Icons sichtbar */
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.icon-button img {
-    width: 40px;
-    height: 40px;
-}
-
-/* Aufgabenliste */
-#taskList {
+/* Aufgabenlisten */
+ul {
     list-style-type: none;
     padding: 0;
 }
 
-/* Erledigte Aufgaben: Eigene Boxen mit X-Button */
-.completed-task {
-    background: rgba(255, 255, 255, 0.7); /* 30% transparenter */
-    border-radius: 10px;
+li {
+    background: rgba(255, 255, 255, 0.7);
     padding: 10px;
-    margin: 10px auto;
-    width: 80%;
+    margin: 5px 0;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.completed-task span {
-    flex-grow: 1;
+/* Kalender */
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    max-width: 350px;
+    margin: auto;
 }
 
-/* X-Button */
-
-.remove-btn {
-    background: none;
-    border: none;
-    color: darkslategrey;
-    font-size: 18px;
+.calendar-day {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;
 }
 
-.remove-btn:hover {
-    color: red;
+.star-achieved {
+    background: url('assets/seestern.png') center/contain no-repeat;
 }
 
-
+/* Versteckte Elemente */
 .hidden {
     display: none;
 }

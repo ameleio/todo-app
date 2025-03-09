@@ -2,50 +2,39 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- kein zoomen-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Ziele</h1>
-
-        <!-- Plus & Augen-Button -->
-        <button id="plus1" class="icon-button">
-            <img src="assets/plus.png" alt="Hinzufügen">
-        </button>
-        
-        <div id="inputContainer" style="display: none;">
-            <input type="text" id="newTask" placeholder="Neue Aufgabe">
-            <button id="plus2" class="icon-button" style="display: none;">
-                <img src="assets/plus.png" alt="Bestätigen">
-            </button>
-        </div>
-        
-
-            <div id="inputContainer">
-                <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
-                <button id="confirmAddTask" class="icon-button">
-                    <img src="assets/plus.png" alt="Bestätigen">
-                </button>
-            </div>
-
-            <button id="showAllBtn" class="icon-button">
-                <img src="assets/eye.png" alt="Alle anzeigen">
-            </button>
-        </div>
-
-        <!-- Aufgabenliste (versteckt) -->
-        <ul id="taskList" class="hidden"></ul>
+    <div id="calendarView">
+        <h1>Kalender</h1>
+        <div id="calendar"></div>
     </div>
 
-    <!-- Erledigte Aufgaben (mit eigener Box) -->
-    <div id="completedTasksContainer"></div>
+    <div id="dailyView" class="hidden">
+        <h1 id="selectedDate"></h1>
+        
+        <div class="container">
+            <h2>Ziele</h2>
+            <div class="button-container">
+                <img id="showInputBtn" src="assets/plus.png" class="icon-btn">
+                <img id="showAllBtn" src="assets/eye.png" class="icon-btn">
+            </div>
+            
+            <input type="number" id="goalInput" placeholder="Ziel setzen" min="1">
+            <button id="setGoalBtn">✔</button>
+            
+            <div id="taskContainer" class="hidden">
+                <ul id="taskList"></ul>
+            </div>
+        </div>
+
+        <div id="completedTasksContainer"></div>
+        <button id="backToCalendar">Zurück zum Kalender</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
