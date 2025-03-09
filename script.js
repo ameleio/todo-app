@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const addTaskBtn = document.getElementById("addTaskBtn");
-    const inputContainer = document.getElementById("inputContainer");
-    const newTaskInput = document.getElementById("newTask");
+    const addTaskBtn = document.getElementById("addTaskBtn"); // Plus-Button
+    const inputContainer = document.getElementById("inputContainer"); // Eingabefeld + Button
+    const newTaskInput = document.getElementById("newTask"); // Textfeld
+    const addTaskConfirmBtn = document.getElementById("addTaskConfirmBtn"); // Bestätigungs-Plus
     const taskList = document.getElementById("taskList");
     const completedTasksContainer = document.getElementById("completedTasksContainer");
     const showAllBtn = document.getElementById("showAllBtn");
@@ -28,34 +29,38 @@ document.addEventListener("DOMContentLoaded", function () {
     // Plus-Button steuert das Eingabefeld & das Hinzufügen von Aufgaben
     addTaskBtn.addEventListener("click", function () {
         if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
-            // Eingabefeld anzeigen
+            // Eingabefeld anzeigen + rechten Plus-Button ausblenden
             inputContainer.style.display = "flex";
+            addTaskBtn.style.display = "none";
             newTaskInput.focus();
         } else {
-            const taskText = newTaskInput.value.trim();
-            if (taskText) {
-                // Aufgabe hinzufügen
-                addNewTask(taskText);
-                newTaskInput.value = "";
-                inputContainer.style.display = "none"; // Eingabefeld ausblenden
-            } else {
-                // Eingabefeld ausblenden, wenn leer
-                inputContainer.style.display = "none";
-            }
+            // Eingabefeld ausblenden & rechten Plus-Button wieder anzeigen
+            inputContainer.style.display = "none";
+            addTaskBtn.style.display = "inline-block";
         }
+    });
+
+    // Aufgabe hinzufügen, wenn auf das Bestätigungs-Plus geklickt wird
+    addTaskConfirmBtn.addEventListener("click", function () {
+        addTask();
     });
 
     // Aufgabe hinzufügen, wenn Enter gedrückt wird
     newTaskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
-            const taskText = newTaskInput.value.trim();
-            if (taskText) {
-                addNewTask(taskText);
-                newTaskInput.value = "";
-                inputContainer.style.display = "none"; // Eingabefeld ausblenden
-            }
+            addTask();
         }
     });
+
+    function addTask() {
+        const taskText = newTaskInput.value.trim();
+        if (taskText) {
+            addNewTask(taskText);
+            newTaskInput.value = "";
+            inputContainer.style.display = "none"; // Eingabefeld ausblenden
+            addTaskBtn.style.display = "inline-block"; // Rechten Plus-Button wieder einblenden
+        }
+    }
 
     function addNewTask(taskText) {
         addTaskToDOM(taskText, false);
