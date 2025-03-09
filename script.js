@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let tasksVisible = false; // Speichert, ob die Aufgaben aktuell sichtbar sind
 
+    // Scrollen auf Mobilgeräten deaktivieren
+    document.body.style.overflow = "hidden";
+
     // Aufgaben aus localStorage laden
     function loadTasks() {
         const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -27,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
             inputContainer.style.display = "flex";
             newTaskInput.focus();
-            addTaskBtn.style.display = "none"; // Plus-Button ausblenden
+            addTaskBtn.removeEventListener("click", showInputField); // Verhindert doppelte Events
+            addTaskBtn.addEventListener("click", addNewTask); // Button zum Hinzufügen umfunktionieren
         }
     });
 
@@ -35,12 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
     newTaskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             addNewTask();
-        }
-    });
-
-    newTaskInput.addEventListener("blur", function () {
-        if (newTaskInput.value.trim() === "") {
-            resetInput(); // Falls nichts eingegeben wurde, alles zurücksetzen
         }
     });
 
@@ -56,7 +54,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function resetInput() {
         inputContainer.style.display = "none";
-        addTaskBtn.style.display = "block"; // Plus-Button wieder einblenden
+        addTaskBtn.removeEventListener("click", addNewTask);
+        addTaskBtn.addEventListener("click", showInputField);
+    }
+
+    function showInputField() {
+        inputContainer.style.display = "flex";
+        newTaskInput.focus();
+        addTaskBtn.removeEventListener("click", showInputField);
+        addTaskBtn.addEventListener("click", addNewTask);
     }
 
     // Aufgabe ins DOM einfügen
