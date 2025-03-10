@@ -1,106 +1,90 @@
-/* Hintergrund */
+/* Allgemeine Stile */
 body {
+    font-family: Arial, sans-serif;
     background-image: url('assets/hintergrund.png');
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
-    background-attachment: scroll;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    text-align: center;
+    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    color: darkslategrey; /* Schriftfarbe für die ganze Seite */
+    text-align: center;
+    overflow: hidden; /* Kein Scrollen auf Mobilgeräten */
 }
 
-/* Hauptcontainer */
+/* Monatsansicht */
+#month-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+}
+
+.month-box {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    scroll-snap-align: center;
+}
+
+.day-box {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    line-height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.starfish {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    margin-left: 5px;
+}
+
+/* Tagesansicht */
+.hidden {
+    display: none;
+}
+
 .container {
     width: 90%;
     max-width: 400px;
-    margin: 50px auto;
-    background: rgba(255, 255, 255, 0.7);
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Button-Container (Ziele) */
-#buttonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* Eingabefeld erscheint neben dem Plus-Button */
-#inputContainer {
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-#newTask {
-    padding: 8px;
-    border: 1px solid darkslategrey;
-    border-radius: 5px;
-    font-size: 16px;
-    color: darkslategrey;
-}
-
-/* Buttons: Nur Icons sichtbar */
-.icon-button {
-    background: none;
-    border: none;
+.buttons img {
+    width: 30px;
     cursor: pointer;
-    padding: 0;
 }
 
-.icon-button img {
-    width: 40px;
-    height: 40px;
-}
-
-/* Aufgabenliste */
-#taskList {
+#task-list, #completed-tasks-container {
     list-style-type: none;
     padding: 0;
 }
 
-/* Erledigte Aufgaben: Eigene Boxen mit X-Button */
-.completed-task {
-    background: rgba(255, 255, 255, 0.7); /* 30% transparenter */
-    border-radius: 10px;
+.task-item, .completed-task {
+    background: rgba(255, 255, 255, 0.7);
+    margin: 5px;
     padding: 10px;
-    margin: 10px auto;
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
-.completed-task span {
-    flex-grow: 1;
-}
-
-/* X-Button */
-
-.remove-btn {
-    background: none;
-    border: none;
-    color: darkslategrey;
-    font-size: 18px;
+#back-to-month {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
     cursor: pointer;
-    margin-left: 10px;
-}
-
-.remove-btn:hover {
-    color: red;
-}
-
-
-.hidden {
-    display: none;
 }

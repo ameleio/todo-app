@@ -2,50 +2,33 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Liste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Selfcare Tracker</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- kein zoomen-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Ziele</h1>
-
-        <!-- Plus & Augen-Button -->
-        <button id="plus1" class="icon-button">
-            <img src="assets/plus.png" alt="Hinzufügen">
-        </button>
-        
-        <div id="inputContainer" style="display: none;">
-            <input type="text" id="newTask" placeholder="Neue Aufgabe">
-            <button id="plus2" class="icon-button" style="display: none;">
-                <img src="assets/plus.png" alt="Bestätigen">
-            </button>
-        </div>
-        
-
-            <div id="inputContainer">
-                <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
-                <button id="confirmAddTask" class="icon-button">
-                    <img src="assets/plus.png" alt="Bestätigen">
-                </button>
-            </div>
-
-            <button id="showAllBtn" class="icon-button">
-                <img src="assets/eye.png" alt="Alle anzeigen">
-            </button>
-        </div>
-
-        <!-- Aufgabenliste (versteckt) -->
-        <ul id="taskList" class="hidden"></ul>
+    <!-- Monatsansicht -->
+    <div id="month-view">
+        <div id="month-container"></div>
     </div>
 
-    <!-- Erledigte Aufgaben (mit eigener Box) -->
-    <div id="completedTasksContainer"></div>
+    <!-- Tagesansicht -->
+    <div id="day-view" class="hidden">
+        <button id="back-to-month">&#9665;</button>
+        <h2 id="selected-date">00.00.00</h2>
+        <div class="container">
+            <h2>Aufgaben</h2>
+            <div class="buttons">
+                <img id="show-input-btn" src="assets/plus.png" alt="Plus">
+                <input id="task-input" type="text" class="hidden" placeholder="Neue Aufgabe">
+                <img id="add-task-btn" src="assets/plus.png" class="hidden" alt="Hinzufügen">
+                <img id="toggle-tasks-btn" src="assets/eye.png" alt="Anzeigen">
+            </div>
+            <ul id="task-list"></ul>
+        </div>
+        <div id="completed-tasks-container"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
