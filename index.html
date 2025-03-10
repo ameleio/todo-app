@@ -2,32 +2,29 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Selfcare Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Monatsansicht -->
-    <div id="month-view">
-        <div id="month-container"></div>
+    <!-- Kalenderseite -->
+    <div id="calendarPage">
+        <div id="calendarContainer"></div>
     </div>
 
-    <!-- Tagesansicht -->
-    <div id="day-view" class="hidden">
-        <button id="back-to-month">&#9665;</button>
-        <h2 id="selected-date">00.00.00</h2>
-        <div class="container">
-            <h2>Aufgaben</h2>
-            <div class="buttons">
-                <img id="show-input-btn" src="assets/plus.png" alt="Plus">
-                <input id="task-input" type="text" class="hidden" placeholder="Neue Aufgabe">
-                <img id="add-task-btn" src="assets/plus.png" class="hidden" alt="Hinzufügen">
-                <img id="toggle-tasks-btn" src="assets/eye.png" alt="Anzeigen">
-            </div>
-            <ul id="task-list"></ul>
+    <!-- Tagesseite mit Todo-Liste -->
+    <div id="dayPage" class="hidden">
+        <button id="backToCalendar" class="back-button">←</button>
+        <h2 id="selectedDate"></h2>
+        <div class="task-box">
+            <span>Aufgaben</span>
+            <img id="toggleInput" src="assets/plus.png" alt="Aufgabe hinzufügen">
+            <img id="toggleTasks" src="assets/eye.png" alt="Aufgaben anzeigen">
         </div>
-        <div id="completed-tasks-container"></div>
+        <input type="text" id="taskInput" class="hidden" placeholder="Neue Aufgabe">
+        <ul id="taskList"></ul>
+        <div id="completedTasks"></div>
     </div>
 
     <script src="script.js"></script>

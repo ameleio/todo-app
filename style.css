@@ -1,18 +1,20 @@
-/* Allgemeine Stile */
+/* Allgemeine Styles */
 body {
     font-family: Arial, sans-serif;
     background-image: url('assets/hintergrund.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    text-align: center;
     margin: 0;
     padding: 0;
-    text-align: center;
-    overflow: hidden; /* Kein Scrollen auf Mobilgeräten */
+    color: darkslategrey;
+    overflow: hidden;
 }
 
-/* Monatsansicht */
-#month-container {
+/* Kalenderseite */
+#calendarContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,68 +25,92 @@ body {
 
 .month-box {
     width: 90%;
-    max-width: 500px;
-    background: rgba(255, 255, 255, 0.8);
-    margin: 10px;
+    margin: 10px 0;
     padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    scroll-snap-align: center;
+    text-align: center;
+    scroll-snap-align: start;
+    position: relative;
 }
 
 .day-box {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 12%;
     margin: 5px;
-    line-height: 40px;
-    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 5px;
     cursor: pointer;
 }
 
-.starfish {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    margin-left: 5px;
+.current-day {
+    background: MediumTurquoise !important;
 }
 
-/* Tagesansicht */
+/* Tagesseite */
 .hidden {
     display: none;
 }
 
-.container {
-    width: 90%;
-    max-width: 400px;
-    margin: auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
+.task-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
 }
 
-.buttons img {
+.task-box img {
     width: 30px;
     cursor: pointer;
 }
 
-#task-list, #completed-tasks-container {
-    list-style-type: none;
-    padding: 0;
+#taskInput {
+    display: none;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
-.task-item, .completed-task {
+.task-item {
     background: rgba(255, 255, 255, 0.7);
-    margin: 5px;
     padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-item button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
     border-radius: 5px;
 }
 
-#back-to-month {
+#completedTasks .task-item {
+    opacity: 0.7;
+}
+
+.back-button {
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Ziel-Boxen */
+.goal-box {
+    display: inline-block;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    margin-left: 10px;
     cursor: pointer;
 }

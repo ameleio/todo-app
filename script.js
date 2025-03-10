@@ -1,109 +1,89 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const monthView = document.getElementById("month-view");
-    const dayView = document.getElementById("day-view");
-    const monthContainer = document.getElementById("month-container");
-    const selectedDateDisplay = document.getElementById("selected-date");
-    const backToMonthBtn = document.getElementById("back-to-month");
+document.addEventListener("DOMContentLoaded", () => {
+    const calendarContainer = document.getElementById("calendarContainer");
+    const dayPage = document.getElementById("dayPage");
+    const calendarPage = document.getElementById("calendarPage");
+    const selectedDateText = document.getElementById("selectedDate");
+    const backToCalendarBtn = document.getElementById("backToCalendar");
 
-    // Aufgaben
-    const showInputBtn = document.getElementById("show-input-btn");
-    const taskInput = document.getElementById("task-input");
-    const addTaskBtn = document.getElementById("add-task-btn");
-    const taskList = document.getElementById("task-list");
-    const completedTasksContainer = document.getElementById("completed-tasks-container");
-    const toggleTasksBtn = document.getElementById("toggle-tasks-btn");
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+    const completedTasks = document.getElementById("completedTasks");
+    const toggleInputBtn = document.getElementById("toggleInput");
+    const toggleTasksBtn = document.getElementById("toggleTasks");
 
-    let currentDate = null;
-    let taskData = JSON.parse(localStorage.getItem("tasks")) || {};
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || {};
+    let completed = JSON.parse(localStorage.getItem("completed")) || {};
+    let dailyGoal = JSON.parse(localStorage.getItem("dailyGoal")) || {};
+    let monthlyGoal = JSON.parse(localStorage.getItem("monthlyGoal")) || {};
 
     function generateCalendar() {
-        monthContainer.innerHTML = "";
         let today = new Date();
         let currentYear = today.getFullYear();
+        let currentMonth = today.getMonth();
+        let currentDay = today.getDate();
 
-        for (let month = today.getMonth() - 1; month <= today.getMonth(); month++) {
-            if (month < 0) continue;
+        for (let monthOffset = -1; monthOffset <= 0; monthOffset++) {
+            let date = new Date(currentYear, currentMonth + monthOffset, 1);
             let monthBox = document.createElement("div");
             monthBox.classList.add("month-box");
+            monthBox.innerHTML = `<h3>${date.toLocaleString("de-DE", { month: "long" })} ${date.getFullYear()}</h3>`;
 
-            let monthTitle = document.createElement("h3");
-            monthTitle.textContent = `${new Date(currentYear, month).toLocaleString('de-DE', { month: 'long' })}`;
-            monthBox.appendChild(monthTitle);
-
-            for (let day = 1; day <= 31; day++) {
+            for (let i = 1; i <= new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(); i++) {
                 let dayBox = document.createElement("div");
                 dayBox.classList.add("day-box");
-                dayBox.textContent = day;
-                dayBox.addEventListener("click", () => openDayView(currentYear, month, day));
+                dayBox.textContent = i;
+
+                if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === currentDay) {
+                    dayBox.classList.add("current-day");
+                }
+
+                dayBox.addEventListener("click", () => openDayPage(i, date.getMonth(), date.getFullYear()));
                 monthBox.appendChild(dayBox);
             }
-            monthContainer.appendChild(monthBox);
+
+            calendarContainer.appendChild(monthBox);
         }
     }
 
-    function openDayView(year, month, day) {
-        currentDate = `${day}.${month + 1}.${year}`;
-        selectedDateDisplay.textContent = currentDate;
-        dayView.classList.remove("hidden");
-        monthView.classList.add("hidden");
-        loadTasks();
-    }
-
-    backToMonthBtn.addEventListener("click", () => {
-        dayView.classList.add("hidden");
-        monthView.classList.remove("hidden");
-    });
-
-    function loadTasks() {
+    function openDayPage(day, month, year) {
+        selectedDateText.textContent = `${day.toString().padStart(2, "0")}.${(month + 1).toString().padStart(2, "0")}.${year}`;
         taskList.innerHTML = "";
-        completedTasksContainer.innerHTML = "";
+        completedTasks.innerHTML = "";
 
-        let tasks = taskData[currentDate] || { tasks: [], completed: [] };
-        tasks.tasks.forEach((task, index) => {
-            let li = createTaskElement(task, index, false);
-            taskList.appendChild(li);
-        });
+        let key = `${day}-${month}-${year}`;
+        if (tasks[key]) {
+            tasks[key].forEach(task => addTaskToList(task, key));
+        }
 
-        tasks.completed.forEach((task, index) => {
-            let li = createTaskElement(task, index, true);
-            completedTasksContainer.appendChild(li);
-        });
+        if (completed[key]) {
+            completed[key].forEach(task => addTaskToCompleted(task, key));
+        }
+
+        calendarPage.classList.add("hidden");
+        dayPage.classList.remove("hidden");
     }
 
-    function createTaskElement(task, index, completed) {
-        let li = document.createElement("li");
-        li.textContent = task;
-        li.classList.add(completed ? "completed-task" : "task-item");
-        li.addEventListener("click", () => markTaskAsDone(index));
-        return li;
+    function addTaskToList(task, key) {
+        let taskItem = document.createElement("li");
+        taskItem.classList.add("task-item");
+        taskItem.innerHTML = `${task} <button onclick="completeTask('${task}', '${key}')">✔</button>`;
+        taskList.appendChild(taskItem);
     }
 
-    function markTaskAsDone(index) {
-        let tasks = taskData[currentDate] || { tasks: [], completed: [] };
-        let task = tasks.tasks.splice(index, 1)[0];
-        tasks.completed.push(task);
-        taskData[currentDate] = tasks;
-        saveTasks();
-        loadTasks();
+    function addTaskToCompleted(task, key) {
+        let taskItem = document.createElement("li");
+        taskItem.classList.add("task-item");
+        taskItem.innerHTML = `${task} <button onclick="removeCompletedTask('${task}', '${key}')">✖</button>`;
+        completedTasks.appendChild(taskItem);
     }
 
-    function saveTasks() {
-        localStorage.setItem("tasks", JSON.stringify(taskData));
-    }
-
-    showInputBtn.addEventListener("click", () => {
+    toggleInputBtn.addEventListener("click", () => {
         taskInput.classList.toggle("hidden");
-        addTaskBtn.classList.toggle("hidden");
     });
 
-    addTaskBtn.addEventListener("click", () => {
-        let task = taskInput.value.trim();
-        if (task) {
-            taskData[currentDate].tasks.push(task);
-            saveTasks();
-            loadTasks();
-        }
-        taskInput.value = "";
+    backToCalendarBtn.addEventListener("click", () => {
+        calendarPage.classList.remove("hidden");
+        dayPage.classList.add("hidden");
     });
 
     generateCalendar();
