@@ -1,135 +1,114 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const plus1 = document.getElementById("plus1");
     const plus2 = document.getElementById("plus2");
     const taskInput = document.getElementById("taskInput");
-    const inputContainer = document.getElementById("inputContainer");
     const taskList = document.getElementById("taskList");
-    const completedTasks = document.getElementById("completedTasks");
+    const inputContainer = document.getElementById("inputContainer");
     const toggleTasks = document.getElementById("toggleTasks");
+    const completedTasksContainer = document.getElementById("completedTasks");
 
-    let showTasks = true;
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+    let showTasks = false;
 
-    // Eingabefeld ein-/ausblenden
-    plus1.addEventListener("click", function () {
-        if (inputContainer.classList.contains("hidden")) {
-            inputContainer.classList.remove("hidden");
-            plus1.style.display = "none";
-        } else {
-            inputContainer.classList.add("hidden");
-            plus1.style.display = "inline";
-        }
-    });
-
-    // Aufgabe hinzufügen
-    function addTask() {
-        const taskText = taskInput.value.trim();
-        if (taskText === "") {
-            inputContainer.classList.add("hidden");
-            plus1.style.display = "inline";
-            return;
-        }
-
-        const li = document.createElement("li");
-        li.textContent = taskText;
-
-        // Erledigt-Button
-        const checkBtn = document.createElement("button");
-        checkBtn.textContent = "✔";
-        checkBtn.classList.add("delete-btn");
-        checkBtn.addEventListener("click", function () {
-            completeTask(li);
-        });
-
-        // Entfernen-Button
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "✖";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function () {
-            li.remove();
-            saveTasks();
-        });
-
-        li.appendChild(checkBtn);
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
-        taskInput.value = "";
-        inputContainer.classList.add("hidden");
-        plus1.style.display = "inline";
-
-        saveTasks();
-    }
-
-    plus2.addEventListener("click", addTask);
-    taskInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            addTask();
-        }
-    });
-
-    // Aufgabe als erledigt markieren
-    function completeTask(taskElement) {
-        taskList.removeChild(taskElement);
-        completedTasks.appendChild(taskElement);
-        saveTasks();
-        
-        setTimeout(() => {
-            taskElement.remove();
-            saveTasks();
-        }, 10000);
-    }
-
-    // Aufgaben speichern
     function saveTasks() {
-        const tasks = [];
-        taskList.querySelectorAll("li").forEach(task => tasks.push(task.textContent));
-        const completed = [];
-        completedTasks.querySelectorAll("li").forEach(task => completed.push(task.textContent));
-
         localStorage.setItem("tasks", JSON.stringify(tasks));
-        localStorage.setItem("completed", JSON.stringify(completed));
+        localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
     }
 
-    // Aufgaben laden
-    function loadTasks() {
-        const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        const savedCompleted = JSON.parse(localStorage.getItem("completed")) || [];
-
-        savedTasks.forEach(taskText => {
+    function renderTasks() {
+        taskList.innerHTML = "";
+        tasks.forEach((task, index) => {
             const li = document.createElement("li");
-            li.textContent = taskText;
-            
-            const checkBtn = document.createElement("button");
-            checkBtn.textContent = "✔";
-            checkBtn.classList.add("delete-btn");
-            checkBtn.addEventListener("click", function () {
-                completeTask(li);
+            li.textContent = task;
+
+            // Häkchen-Button
+            const checkButton = document.createElement("button");
+            checkButton.innerHTML = "✔";
+            checkButton.classList.add("icon-button");
+            checkButton.addEventListener("click", () => {
+                completeTask(index);
             });
 
-            const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "✖";
-            deleteBtn.classList.add("delete-btn");
-            deleteBtn.addEventListener("click", function () {
-                li.remove();
-                saveTasks();
-            });
-
-            li.appendChild(checkBtn);
-            li.appendChild(deleteBtn);
+            li.appendChild(checkButton);
             taskList.appendChild(li);
         });
 
-        savedCompleted.forEach(taskText => {
-            const li = document.createElement("li");
-            li.textContent = taskText;
-            completedTasks.appendChild(li);
+        // Erledigte Aufgaben anzeigen
+        completedTasksContainer.innerHTML = "";
+        completedTasks.forEach((task, index) => {
+            const div = document.createElement("div");
+            div.textContent = task;
+            div.classList.add("completed-task");
+
+            // X-Button zum Löschen
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";
+            deleteButton.classList.add("delete-button");
+            deleteButton.addEventListener("click", () => {
+                removeCompletedTask(index);
+            });
+
+            div.appendChild(deleteButton);
+            completedTasksContainer.appendChild(div);
         });
     }
 
-    loadTasks();
+    function completeTask(index) {
+        completedTasks.push(tasks[index]);
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
 
-    // Aufgaben ein-/ausblenden
-    toggleTasks.addEventListener("click", function () {
-        showTasks = !showTasks;
-        taskList.style.display = showTasks ? "block" : "none";
+    function removeCompletedTask(index) {
+        completedTasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+
+    plus1.addEventListener("click", () => {
+        inputContainer.classList.remove("hidden");
+        plus1.classList.add("hidden");
     });
+
+    plus2.addEventListener("click", () => {
+        if (taskInput.value.trim() !== "") {
+            tasks.push(taskInput.value.trim());
+            taskInput.value = "";
+            saveTasks();
+            renderTasks();
+        }
+        inputContainer.classList.add("hidden");
+        plus1.classList.remove("hidden");
+    });
+
+    toggleTasks.addEventListener("click", () => {
+        showTasks = !showTasks;
+        taskList.classList.toggle("hidden", !showTasks);
+    });
+
+    taskInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && taskInput.value.trim() !== "") {
+            tasks.push(taskInput.value.trim());
+            taskInput.value = "";
+            saveTasks();
+            renderTasks();
+            inputContainer.classList.add("hidden");
+            plus1.classList.remove("hidden");
+        }
+    });
+
+    // Automatisches Ausblenden nicht erledigter Aufgaben nach 10 Sekunden
+    function autoHideTasks() {
+        setTimeout(() => {
+            if (showTasks) {
+                taskList.classList.add("hidden");
+                showTasks = false;
+            }
+        }, 10000);
+    }
+
+    autoHideTasks();
+    renderTasks();
 });

@@ -2,26 +2,42 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Todo App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Hauptcontainer -->
     <div class="container">
-        <h2>Aufgaben</h2>
-        <div class="button-container">
-            <img id="plus1" src="assets/plus.png" alt="Plus">
-            <img id="toggleTasks" src="assets/auge.png" alt="Auge">
-        </div>
+        <h2>Aufgaben <span id="currentDate"></span></h2>
+
+        <!-- Plus-Button zum Anzeigen des Eingabefelds -->
+        <button id="plus1" class="icon-button">
+            <img src="assets/plus.png" alt="Aufgabe hinzufügen">
+        </button>
+
+        <!-- Eingabefeld + Plus-Button zum Bestätigen -->
         <div id="inputContainer" class="hidden">
-            <input type="text" id="taskInput" placeholder="Neue Aufgabe...">
-            <img id="plus2" src="assets/plus.png" alt="Plus">
+            <input type="text" id="taskInput" placeholder="Neue Aufgabe eingeben...">
+            <button id="plus2" class="icon-button">
+                <img src="assets/plus.png" alt="Bestätigen">
+            </button>
         </div>
+
+        <!-- Auge-Button zum Anzeigen der offenen Aufgaben -->
+        <button id="toggleTasks" class="icon-button">
+            <img src="assets/auge.png" alt="Aufgaben anzeigen">
+        </button>
+
+        <!-- Liste der nicht erledigten Aufgaben -->
+        <ul id="taskList" class="hidden"></ul>
     </div>
 
-    <ul id="taskList"></ul>
-    <ul id="completedTasks"></ul>
+    <!-- Bereich für erledigte Aufgaben -->
+    <div id="completedTasks"></div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
