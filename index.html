@@ -2,30 +2,58 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Selfcare Tracker</title>
-    <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Kalender</title>
+        <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- kein zoomen-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
 </head>
 <body>
 
-    <!-- Kalenderseite -->
-    <div id="calendarPage">
-        <div id="calendarContainer"></div>
+
+<!-- Tagesansicht -->
+<div id="day-view" class="hidden">
+    <button id="back-to-month">&#9665;</button>
+    <h2 id="selected-date">00.00.00</h2>
+    <div class="container">
+        <h1>Aufgaben</h1>
+
+        <!-- Plus & Augen-Button -->
+        <button id="plus1" class="icon-button">
+            <img src="assets/plus.png" alt="Hinzufügen">
+        </button>
+        
+        <div id="inputContainer" style="display: none;">
+            <input type="text" id="newTask" placeholder="Neue Aufgabe">
+            <button id="plus2" class="icon-button" style="display: none;">
+                <img src="assets/plus.png" alt="Bestätigen">
+            </button>
+        </div>
+        
+
+            <div id="inputContainer">
+                <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
+                <button id="confirmAddTask" class="icon-button">
+                    <img src="assets/plus.png" alt="Bestätigen">
+                </button>
+            </div>
+
+            <button id="showAllBtn" class="icon-button">
+                <img src="assets/eye.png" alt="Alle anzeigen">
+            </button>
+        </div>
+
+        <!-- Aufgabenliste (versteckt) -->
+        <ul id="taskList" class="hidden"></ul>
     </div>
 
-    <!-- Tagesseite mit Todo-Liste -->
-    <div id="dayPage" class="hidden">
-        <button id="backToCalendar" class="back-button">←</button>
-        <h2 id="selectedDate"></h2>
-        <div class="task-box">
-            <span>Aufgaben</span>
-            <img id="toggleInput" src="assets/plus.png" alt="Aufgabe hinzufügen">
-            <img id="toggleTasks" src="assets/eye.png" alt="Aufgaben anzeigen">
-        </div>
-        <input type="text" id="taskInput" class="hidden" placeholder="Neue Aufgabe">
-        <ul id="taskList"></ul>
-        <div id="completedTasks"></div>
-    </div>
+    <!-- Erledigte Aufgaben (mit eigener Box) -->
+    <div id="completedTasksContainer"></div>
+</div>
 
     <script src="script.js"></script>
 </body>

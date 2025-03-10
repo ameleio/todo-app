@@ -1,116 +1,106 @@
-/* Allgemeine Styles */
+/* Hintergrund */
 body {
-    font-family: Arial, sans-serif;
     background-image: url('assets/hintergrund.png');
     background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: center;
+    background-attachment: scroll;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
-    color: darkslategrey;
-    overflow: hidden;
+    color: darkslategrey; /* Schriftfarbe für die ganze Seite */
 }
 
-/* Kalenderseite */
-#calendarContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto;
-    height: 100vh;
-    scroll-snap-type: y mandatory;
-}
-
-.month-box {
+/* Hauptcontainer */
+.container {
     width: 90%;
-    margin: 10px 0;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    text-align: center;
-    scroll-snap-align: start;
-    position: relative;
-}
-
-.day-box {
-    display: inline-block;
-    width: 12%;
-    margin: 5px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.current-day {
-    background: MediumTurquoise !important;
-}
-
-/* Tagesseite */
-.hidden {
-    display: none;
-}
-
-.task-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.task-box img {
-    width: 30px;
-    cursor: pointer;
-}
-
-#taskInput {
-    display: none;
-    margin-bottom: 10px;
-    padding: 5px;
-}
-
-.task-item {
+    max-width: 400px;
+    margin: 50px auto;
     background: rgba(255, 255, 255, 0.7);
-    padding: 10px;
-    margin: 5px 0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Button-Container (Ziele) */
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Eingabefeld erscheint neben dem Plus-Button */
+#inputContainer {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#newTask {
+    padding: 8px;
+    border: 1px solid darkslategrey;
     border-radius: 5px;
+    font-size: 16px;
+    color: darkslategrey;
+}
+
+/* Buttons: Nur Icons sichtbar */
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.icon-button img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Aufgabenliste */
+#taskList {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Erledigte Aufgaben: Eigene Boxen mit X-Button */
+.completed-task {
+    background: rgba(255, 255, 255, 0.7); /* 30% transparenter */
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.task-item button {
-    background: red;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
+.completed-task span {
+    flex-grow: 1;
 }
 
-#completedTasks .task-item {
-    opacity: 0.7;
-}
+/* X-Button */
 
-.back-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.remove-btn {
     background: none;
     border: none;
-    font-size: 24px;
+    color: darkslategrey;
+    font-size: 18px;
     cursor: pointer;
+    margin-left: 10px;
 }
 
-/* Ziel-Boxen */
-.goal-box {
-    display: inline-block;
-    padding: 5px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
-    margin-left: 10px;
-    cursor: pointer;
+.remove-btn:hover {
+    color: red;
+}
+
+
+.hidden {
+    display: none;
 }
